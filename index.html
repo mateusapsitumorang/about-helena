@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helena Budi Riani</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('helena-poto.JPG') center/cover no-repeat;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: slideDown 1s ease-out;
+        }
+
+        .header-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .main-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 0 auto;
+            max-width: 500px;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: floatUp 1.5s ease-out 0.5s both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 35px 70px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .image-container:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            background: url('helena-poto2.JPG') center/cover no-repeat;
+        }
+
+        .image-container:hover .profile-image {
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .romantic-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-heart {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .modal-message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .close-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(238, 90, 82, 0.4);
+        }
+
+        .close-btn:hover {
+            background: linear-gradient(45deg, #ee5a52, #ff6b6b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(238, 90, 82, 0.6);
+        }
+
+        .close-btn:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1rem;
+            font-weight: 300;
+            margin-top: 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .profile-card {
+                padding: 30px 20px;
+                margin: 0 15px;
+            }
+
+            .image-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="header-title">Helena Budi Riani, S.tp</h1>
+            <p class="header-subtitle">Seseorang yang sangat Istimewa</p>
+        </header>
+
+        <main class="main-section">
+            <div class="profile-card floating">
+                <div class="image-container" id="profileImage">
+                    <div class="profile-image"></div>
+                </div>
+
+                <h2 class="profile-name">Helena Budi Riani</h2>
+                <p class="profile-description">
+                    Helena Budi Riani adalah sosok yang luar biasa istimewa dalam hidupku.
+                    Setiap senyuman yang terpancar dari wajahnya mampu menerangi hari-hariku
+                    yang kelam. Kehadirannya bagaikan secercah cahaya yang memberikan kehangatan
+                    di tengah dinginnya dunia. Dia bukan hanya seorang kekasih, tetapi juga
+                    sahabat terbaik yang selalu ada di setiap langkahku. Bersamanya, aku
+                    merasakan kebahagiaan yang tak terhingga. ❤️
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Pesan Romantis -->
+    <div class="romantic-modal" id="romanticModal">
+        <div class="modal-content">
+            <div class="modal-heart">💕</div>
+            <p class="modal-message">
+                "Setiap detik bersamamu adalah hadiah terindah yang pernah aku terima.
+                Cintaku padamu lebih dalam dari samudra, lebih tinggi dari langit,
+                dan lebih abadi dari waktu itu sendiri."
+            </p>
+            <button class="close-btn" onclick="closeModal()">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Dibuat dengan Cinta untuk Helena tercinta</p>
+    </footer>
+
+    <script>
+        // JavaScript untuk interaksi modal
+        const profileImage = document.getElementById('profileImage');
+        const romanticModal = document.getElementById('romanticModal');
+
+        // Event listener untuk membuka modal
+        profileImage.addEventListener('click', function () {
+            romanticModal.style.display = 'flex';
+        });
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            romanticModal.style.display = 'none';
+        }
+
+        // Menutup modal ketika mengklik area di luar modal
+        romanticModal.addEventListener('click', function (event) {
+            if (event.target === romanticModal) {
+                closeModal();
+            }
+        });
+
+        // Menutup modal dengan tombol ESC
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && romanticModal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // Efek parallax sederhana untuk background
+        window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('body::before');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Animasi loading ketika halaman dimuat
+        window.addEventListener('load', function () {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
